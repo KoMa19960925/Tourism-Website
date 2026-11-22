@@ -3,110 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pearl  of  the  Indian  Ocean</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <!-- custom css file link  -->
+    <title>Trip Planner | Discover Sri Lanka</title>
     <link rel="stylesheet" href="style.css">
-   
-
+    <script src="script1.js" defer></script>
 </head>
 <body>
-   <section class="To-Do_List" id="To-Do_List">
-
-    <h1 class="heading">
-        <span>T</span>
-        <span>0</span>
-        <span>-</span>
-        <span>D</span>
-        <span>o</span>
-        <span>L</span>
-        <span>i</span>
-        <span>s</span>
-        <span>t</span>
-    </h1>
-    <div class="kinthu">
-    <form id="new-task-form">
-        <h2></h2>
-        <input 
-            type="text" 
-            name="new-task-input" 
-            id="new-task-input" 
-            placeholder="What do you have planned?" />
-        <input 
-            type="submit"
-            id="new-task-submit" 
-            value="Add task" />
-    </form>
-    </header>
-    <main>
-    <section class="task-list">
-        <h2>Tasks</h2>
-
-        <div id="tasks">
-
-            <!-- <div class="task">
-                <div class="content">
-                    <input 
-                        type="text" 
-                        class="text" 
-                        value="A new task"
-                        readonly>
-                </div>
-                <div class="actions">
-                    
-                    <button class="delete">Delete</button>
-                </div>
-            </div> -->
-
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&#10022;</span> Discover Sri Lanka</a>
+            <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" hidden>Menu</button>
+            <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="place.html">Destinations</a>
+                <a href="informaction.html">Travel Guide</a>
+                <a href="To_dolist.html" aria-current="page">Trip Planner</a>
+                <a href="Contact.html">About</a>
+                <a href="About.html">Contact</a>
+            </nav>
         </div>
-    </section>
+    </header>
+    <main id="main-content" class="container inner-page">
+        <h1>Trip planner</h1>
+        <div class="panel planner">
+            <form id="new-task-form">
+                <label for="new-task-input">Add something to your trip checklist</label>
+                <div class="planner-input">
+                    <input id="new-task-input" type="text" placeholder="Book a train to Kandy" required>
+                    <button class="button" type="submit">Add task</button>
+                </div>
+            </form>
+            <h2>Your checklist</h2>
+            <p id="empty-tasks">Your checklist is empty.</p>
+            <ul id="tasks"></ul>
+        </div>
     </main>
-    </div>
-    <br>
-    <br>
-
-
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-
-
-
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-
-
-
-
-
-
-
-
-
-
-    </br>
-</section>
-                            
-                                                            
-   
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/a81368914c.js"></script>
-<!-- custom js file link  -->
-
-<script src="script1.js"></script>
-    
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&#10022;</span> Discover Sri Lanka</a>
+            <a href="To_dolist.html">Plan your trip</a>
+        </div>
+    </footer>
 </body>
 </html>

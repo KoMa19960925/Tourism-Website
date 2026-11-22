@@ -1,138 +1,89 @@
-let searchBtn = document.querySelector('#search-btn');
-let searchBar = document.querySelector('.search-bar-container');
-let formBtn = document.querySelector('#login-btn');
-let loginForm = document.querySelector('.login-form-container');
-let formClose = document.querySelector('#form-close');
-let menu = document.querySelector('#menu-bar');
-let navbar = document.querySelector('.navbar');
-let videoBtn = document.querySelectorAll('.vid-btn');
-window.addEventListener('load', () => {
-	const form = document.querySelector("#new-task-form");
-	const input = document.querySelector("#new-task-input");
-	const list_el = document.querySelector("#tasks");
+const menuToggle = document.querySelector(".menu-toggle");
+const navigation = document.querySelector("#site-nav");
+const mobileLayout = window.matchMedia("(max-width: 52rem)");
 
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-
-		const task = input.value;
-
-		const task_el = document.createElement('div');
-		task_el.classList.add('task');
-
-		const task_content_el = document.createElement('div');
-		task_content_el.classList.add('content');
-
-		task_el.appendChild(task_content_el);
-
-		const task_input_el = document.createElement('input');
-		task_input_el.classList.add('text');
-		task_input_el.type = 'text';
-		task_input_el.value = task;
-		task_input_el.setAttribute('readonly', 'readonly');
-
-		task_content_el.appendChild(task_input_el);
-
-		const task_actions_el = document.createElement('div');
-		task_actions_el.classList.add('actions');
-		
-		
-
-		const task_delete_el = document.createElement('button');
-		task_delete_el.classList.add('delete');
-		task_delete_el.innerText = 'Delete';
-
-		
-		task_actions_el.appendChild(task_delete_el);
-
-		task_el.appendChild(task_actions_el);
-
-		list_el.appendChild(task_el);
-
-		input.value = '';
-
-		
-
-		task_delete_el.addEventListener('click', (e) => {
-			list_el.removeChild(task_el);
-		});
-	});
-});
-
-
-window.onscroll = () =>{
-    searchBtn.classList.remove('fa-times');
-    searchBar.classList.remove('active');
-    menu.classList.remove('fa-times');
-    navbar.classList.remove('active');
-    loginForm.classList.remove('active');
+function updateMenu() {
+    menuToggle.hidden = !mobileLayout.matches;
+    menuToggle.setAttribute("aria-expanded", "false");
+    navigation.toggleAttribute("data-collapsed", mobileLayout.matches);
 }
 
-menu.addEventListener('click', () =>{
-    menu.classList.toggle('fa-times');
-    navbar.classList.toggle('active');
+updateMenu();
+mobileLayout.addEventListener("change", updateMenu);
+
+menuToggle.addEventListener("click", () => {
+    const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", String(!expanded));
+    navigation.toggleAttribute("data-collapsed", expanded);
 });
 
-searchBtn.addEventListener('click', () =>{
-    searchBtn.classList.toggle('fa-times');
-    searchBar.classList.toggle('active');
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+        updateMenu();
+        menuToggle.focus();
+    }
 });
 
-formBtn.addEventListener('click', () =>{
-    loginForm.classList.add('active');
-});
+const search = document.querySelector("#destination-search");
 
-formClose.addEventListener('click', () =>{
-    loginForm.classList.remove('active');
-});
+if (search) {
+    const cards = [...document.querySelectorAll(".destination-card")];
+    const status = document.querySelector(".search-status");
 
-videoBtn.forEach(btn =>{
-    btn.addEventListener('click', ()=>{
-        document.querySelector('.controls .active').classList.remove('active');
-        btn.classList.add('active');
-        let src = btn.getAttribute('data-src');
-        document.querySelector('#video-slider').src = src;
+    search.parentElement.hidden = false;
+
+    function filterDestinations() {
+        const query = search.value.trim().toLowerCase();
+        let matches = 0;
+
+        for (const card of cards) {
+            const heading = card.querySelector("h2").textContent.toLowerCase();
+            card.hidden = !heading.includes(query);
+            if (!card.hidden) matches += 1;
+        }
+
+        status.hidden = !query;
+        status.textContent = matches === 0
+            ? "No destinations found. Try a different name."
+            : matches + (matches === 1 ? " destination found." : " destinations found.");
+    }
+
+    search.addEventListener("input", filterDestinations);
+    filterDestinations();
+}
+
+const taskForm = document.querySelector("#new-task-form");
+
+if (taskForm) {
+    const taskInput = document.querySelector("#new-task-input");
+    const tasks = document.querySelector("#tasks");
+    const emptyTasks = document.querySelector("#empty-tasks");
+
+    taskForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = taskInput.value.trim();
+        if (!text) return;
+
+        const item = document.createElement("li");
+        const label = document.createElement("span");
+        const remove = document.createElement("button");
+
+        label.textContent = text;
+        remove.type = "button";
+        remove.textContent = "Delete";
+        remove.setAttribute("aria-label", "Delete " + text);
+        remove.addEventListener("click", () => {
+            const nextButton = item.nextElementSibling?.querySelector("button");
+            const previousButton = item.previousElementSibling?.querySelector("button");
+            item.remove();
+            emptyTasks.hidden = tasks.childElementCount > 0;
+            (nextButton || previousButton || taskInput).focus();
+        });
+
+        item.append(label, remove);
+        tasks.append(item);
+        emptyTasks.hidden = true;
+        taskForm.reset();
+        taskInput.focus();
     });
-});
-
-var swiper = new Swiper(".review-slider", {
-    spaceBetween: 20,
-    loop:true,
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-    },
-    breakpoints: {
-        640: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        },
-    },
-});
-
-var swiper = new Swiper(".brand-slider", {
-    spaceBetween: 20,
-    loop:true,
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-    },
-    breakpoints: {
-        450: {
-          slidesPerView: 2,
-        },
-        768: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        1200: {
-          slidesPerView: 5,
-        },
-      },
-});
+}
